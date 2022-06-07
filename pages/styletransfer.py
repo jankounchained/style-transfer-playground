@@ -1,4 +1,3 @@
-# %%
 import os
 
 import streamlit as st
@@ -8,7 +7,7 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
 
-from util import crop_center, load_img_url, load_img_path, show_n, transform_img, tensor_to_image
+from src.util import crop_center, load_img_url, load_img_path, show_n, transform_img, tensor_to_image
 
 
 # # Only use the below code if you have low resources.
