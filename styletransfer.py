@@ -69,11 +69,11 @@ with col1:
     st.write('Content')
     content_image_file = st.file_uploader(
         "Upload main image", type=("png", "jpg"))
-    try:
-        content_image_file = content_image_file.read()
-        content_image = transform_img(content_image_file)
-    except:
-        pass
+    # try:
+    content_image_file = content_image_file.read()
+    content_image = transform_img(content_image_file)
+    # except:
+        # pass
 
 with col2:
     st.write('Style')

@@ -50,6 +50,7 @@ def show_n(images, titles=('',)):
         plt.title(titles[i] if len(titles) > i else '')
         plt.show()
 
+
 def transform_img(img):
     max_dim = 512
     img = tf.image.decode_image(img)
@@ -57,6 +58,9 @@ def transform_img(img):
 
     shape = tf.cast(tf.shape(img)[:-1], tf.float32)
     long_dim = max(shape)
+    # if max_dim > long_dim:
+    #     raise ValueError('fuck you')
+    # else:
     scale = max_dim / long_dim
 
     new_shape = tf.cast(shape * scale, tf.int32)
