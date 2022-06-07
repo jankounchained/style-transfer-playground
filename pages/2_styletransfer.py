@@ -44,7 +44,16 @@ with col1_a:
     st.write('Content')
     content_image_file = st.file_uploader(
         "Upload main image", type=("png", "jpg"))
-    
+
+with col2_a:
+    st.write('Style')
+    style_image_file = st.file_uploader(
+        "Upload style image", type=("png", "jpg"))
+
+
+# show loaded images
+col1_a2, col2_a2 = st.columns(2)
+with col1_a2:
     if content_image_file or 'canvas_tensor' in st.session_state:
         st.write('Selected image')
 
@@ -57,11 +66,7 @@ with col1_a:
         content_image = st.session_state['canvas_tensor']
         st.image(st.session_state['canvas_img'])
 
-with col2_a:
-    st.write('Style')
-    style_image_file = st.file_uploader(
-        "Upload style image", type=("png", "jpg"))
-
+with col2_a2:
     if style_image_file:
         st.write('Selected image')
         style_image_file = style_image_file.read()
@@ -69,8 +74,6 @@ with col2_a:
         style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
         st.image(style_image_file)
 
-
-# %%
 # stylize
 st.header('')
 col1_b, col2_b, col3_b = st.columns([1, 0.5, 1])

@@ -15,7 +15,8 @@ if drawing_mode == 'point':
     point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
 stroke_color = st.sidebar.color_picker("Stroke color hex: ")
 bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
-bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
+# FIXME: disabling bg image upload, as this doesn't carry ove to style transfer
+# bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
 
 realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
@@ -27,7 +28,9 @@ canvas_result = st_canvas(
     stroke_width=stroke_width,
     stroke_color=stroke_color,
     background_color=bg_color,
-    background_image=Image.open(bg_image) if bg_image else None,
+    # FIXME: see above, bg image upload
+    # background_image=Image.open(bg_image) if bg_image else None,
+    background_image=None,
     update_streamlit=realtime_update,
     width=512,
     height=512,
