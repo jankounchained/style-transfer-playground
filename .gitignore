@@ -4,6 +4,10 @@ papers/
 dalle-mini--vqgan_imagenet_f16_16384.main.9f990ec03ea054204706013e2176bbb498ebc387/
 flax-community--dalle-mini.main.dd70b87b3a1cd945142036e7b9a50093796e7299/
 
+# env
+.DS_Store
+.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
