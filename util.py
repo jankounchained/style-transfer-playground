@@ -37,6 +37,12 @@ def load_img_path(image_path, image_size=(256, 256), preserve_aspect_ratio=True)
     img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
     return img
 
+def load_img_array(image_array, image_size=(256, 256), preserve_aspect_ratio=True):
+    img = tf.io.decode_image(image_array, channels=3, dtype=tf.float32)[tf.newaxis, ...]
+    img = crop_center(img)
+    img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
+    return img
+
 def show_n(images, titles=('',)):
     n = len(images)
     image_sizes = [image.shape[1] for image in images]
@@ -51,8 +57,7 @@ def show_n(images, titles=('',)):
         plt.show()
 
 
-def transform_img(img):
-    max_dim = 512
+def transform_img(img, max_dim=512):
     img = tf.image.decode_image(img)
     img = tf.image.convert_image_dtype(img, tf.float32)
 
