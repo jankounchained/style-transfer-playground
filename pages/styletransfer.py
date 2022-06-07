@@ -8,7 +8,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 
 from src.util import crop_center, load_img_url, load_img_path, show_n, transform_img, tensor_to_image
-
+from src.nst_config import get_model, get_style_ref_imgs
 
 # # Only use the below code if you have low resources.
 # os.environ['CUDA_VISIBLE_DEVICES'] = ""
@@ -19,35 +19,17 @@ from src.util import crop_center, load_img_url, load_img_path, show_n, transform
 
 # streamlit config
 st.set_page_config(
-    page_title="Fuckery",
-    page_icon="🎈",
+    page_title="Style transfer",
+    page_icon="👺",
 )
 
 # model config
-@st.cache
-def get_model():
-    hub_handle = 'https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2'
-    hub_module = hub.load(hub_handle)
-    return hub_module
+if 'nst_model' not in st.session_state:
+    model = get_model()
+    st.session_state['nst_model'] = model
+else:
+    model = st.session_state['nst_model']
 
-model = get_model()
-
-
-# width
-def _max_width_():
-    max_width_str = f"max-width: 1400px;"
-    st.markdown(
-        f"""
-    <style>
-    .reportview-container .main .block-container{{
-        {max_width_str}
-    }}
-    </style>    
-    """,
-        unsafe_allow_html=True,
-    )
-
-_max_width_()
 
 st.title("Style transfer fun zone")
 st.header("")

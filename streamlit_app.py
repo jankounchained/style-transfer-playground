@@ -9,9 +9,9 @@ import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
 import tensorflow as tf
-import tensorflow_hub as hub
 
-from src.util import transform_img, tensor_to_image, load_img_path, load_img_array
+from src.util import transform_img, convert_canvas
+from src.nst_config import get_model, get_style_ref_imgs, quick_style_transfer
 
 
 ###
@@ -24,53 +24,16 @@ st.set_page_config(
     page_icon="👺",
 )
 
-# helper funs specific for this app
-def convert_canvas(canvas_data):
-
-    # convert from RGBA to RGB & save
-    canvas_rgb = canvas_data[:, :, 0:3]
-    canvas_img = Image.fromarray(canvas_rgb, "RGB")
-    canvas_img.save("canvas.png")
-    # load and transform
-    read_img = tf.io.read_file("canvas.png")
-    transformed_img = transform_img(read_img, max_dim=300)
-
-    return transformed_img
-
-
-def quick_style_transfer(content_image, style_image):
-    outputs = model(tf.constant(content_image), tf.constant(style_image))
-    stylized_image = outputs[0]
-    final_img = tensor_to_image(stylized_image)
-    return final_img
-
 
 # model config
-@st.cache
-def get_model():
-    hub_handle = "https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2"
-    hub_module = hub.load(hub_handle)
-    return hub_module
+if 'nst_model' not in st.session_state:
+    model = get_model()
+    st.session_state['nst_model'] = model
+else:
+    model = st.session_state['nst_model']
 
-
-# @st.cache
-def get_style_ref_imgs(reference_dir="reference-img/"):
-
-    paths = [os.path.join(reference_dir, path) for path in os.listdir(reference_dir)]
-
-    style_image_collection = []
-    for path in paths:
-        style_image = load_img_path(path)
-        style_image = tf.nn.avg_pool(
-            style_image, ksize=[3, 3], strides=[1, 1], padding="SAME"
-        )
-        style_image_collection.append(style_image)
-
-    return style_image_collection
-
-
-model = get_model()
 style_image_collection = get_style_ref_imgs()
+
 
 
 ###
@@ -108,7 +71,9 @@ with col2:
         transformed_canvas = convert_canvas(canvas_hardcoded.image_data)
 
         display_img = quick_style_transfer(
-            content_image=transformed_canvas, style_image=picked_style_img
+            model=model,
+            content_image=transformed_canvas,
+            style_image=picked_style_img
         )
 
         st.image(display_img)

@@ -88,3 +88,16 @@ def tensor_to_image(tensor):
         assert tensor.shape[0] == 1
         tensor = tensor[0]
     return Image.fromarray(tensor)
+
+
+def convert_canvas(canvas_data):
+
+    # convert from RGBA to RGB & save
+    canvas_rgb = canvas_data[:, :, 0:3]
+    canvas_img = Image.fromarray(canvas_rgb, "RGB")
+    canvas_img.save("canvas.png")
+    # load and transform
+    read_img = tf.io.read_file("canvas.png")
+    transformed_img = transform_img(read_img, max_dim=300)
+
+    return transformed_img
