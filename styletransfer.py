@@ -69,22 +69,19 @@ with col1:
     st.write('Content')
     content_image_file = st.file_uploader(
         "Upload main image", type=("png", "jpg"))
-    # try:
-    content_image_file = content_image_file.read()
-    content_image = transform_img(content_image_file)
-    # except:
-        # pass
+    
+    if content_image_file:
+        content_image_file = content_image_file.read()
+        content_image = transform_img(content_image_file)
 
 with col2:
     st.write('Style')
     style_image_file = st.file_uploader(
         "Upload style image", type=("png", "jpg"))
-    try:
+    if style_image_file:
         style_image_file = style_image_file.read()
         style_image = transform_img(style_image_file)
         style_image = tf.nn.avg_pool(style_image, ksize=[3,3], strides=[1,1], padding='SAME')
-    except:
-        pass
 
 
 # %%

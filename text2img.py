@@ -5,6 +5,8 @@ import sys
 from io import BytesIO
 import random
 from functools import partial
+from tqdm import tqdm
+from wasabi import msg
 
 import jax
 import numpy as np
@@ -23,10 +25,14 @@ from flax.training.common_utils import shard_prng_key
 import wandb
 
 # dalle-mini
-DALLE_MODEL = "dalle-mini/dalle-mini/wzoooa1c:latest"  # can be wandb artifact or 🤗 Hub or local folder or google bucket
+# DALLE_MODEL = "./flax-community--dalle-mini.main.dd70b87b3a1cd945142036e7b9a50093796e7299"  # can be wandb artifact or 🤗 Hub or local folder or google bucket
+# DALLE_COMMIT_ID = None
+DALLE_MODEL = "dalle-mini/dalle-mini/mega-1-fp16:latest"  # can be wandb artifact or 🤗 Hub or local folder or google bucket
 DALLE_COMMIT_ID = None
 
 # VQGAN model
+# VQGAN_REPO = "./dalle-mini--vqgan_imagenet_f16_16384.main.9f990ec03ea054204706013e2176bbb498ebc387"
+# VQGAN_COMMIT_ID = None
 VQGAN_REPO = "dalle-mini/vqgan_imagenet_f16_16384"
 VQGAN_COMMIT_ID = "e93a26e7707683d349bf5d5c41c5b0ef69b677a9"
 
@@ -39,7 +45,7 @@ cond_scale = 3.0
 
 wandb.init(anonymous="must")
 
-
+msg.info('initializing models')
 # Load models & tokenizer
 model = DalleBart.from_pretrained(DALLE_MODEL, revision=DALLE_COMMIT_ID)
 vqgan = VQModel.from_pretrained(VQGAN_REPO, revision=VQGAN_COMMIT_ID)
@@ -85,7 +91,7 @@ def generate_images(prompt:str, num_predictions: int):
 
   # generate images
   images = []
-  for i in range(num_predictions // jax.device_count()):
+  for i in tqdm(range(num_predictions // jax.device_count())):
       # get a new key
       key, subkey = jax.random.split(key)
       
@@ -105,9 +111,12 @@ def generate_images(prompt:str, num_predictions: int):
         
   return images
 
+msg.info('generating text2img')
 imgs = generate_images('jan playing around', 8)
 
 for i, img in enumerate(imgs):
     img.save(f'{i}.png')
+
+msg.good('done')
 
 # %%
