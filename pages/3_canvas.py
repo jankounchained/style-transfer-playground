@@ -3,6 +3,8 @@ from PIL import Image
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 
+from src.util import convert_canvas
+
 # Specify canvas parameters in application
 drawing_mode = st.sidebar.selectbox(
     "Drawing tool:", ("freedraw", "point", "line", "rect", "circle", "transform")
@@ -27,13 +29,26 @@ canvas_result = st_canvas(
     background_color=bg_color,
     background_image=Image.open(bg_image) if bg_image else None,
     update_streamlit=realtime_update,
-    width=600,
-    height=600,
+    width=512,
+    height=512,
     drawing_mode=drawing_mode,
     point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
     key="canvas",
 )
 
-# Do something interesting with the image data and paths
-if canvas_result.image_data is not None:
-    st.image(canvas_result.image_data)
+# # Do something interesting with the image data and paths
+# if canvas_result.image_data is not None:
+#     st.image(canvas_result.image_data)
+
+
+# send to style transfer
+send_to_nst = st.button('Use for Style Transfer')
+
+if send_to_nst:
+    # transform img
+    transformed_canvas = convert_canvas(canvas_result.image_data)
+    # save in session state
+    st.session_state['canvas_img'] = canvas_result.image_data
+    st.session_state['canvas_tensor'] = transformed_canvas
+
+    st.write('FIXME: Please navigate to the Style transfer page')

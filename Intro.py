@@ -20,7 +20,7 @@ from src.nst_config import get_model, get_style_ref_imgs, quick_style_transfer
 
 # streamlit config
 st.set_page_config(
-    page_title="Landing page",
+    page_title="Van Gogh on a swing",
     page_icon="👺",
 )
 
@@ -40,13 +40,14 @@ style_image_collection = get_style_ref_imgs()
 ### app layout
 ###
 
-st.title("TITLE")
+st.title("Van Gogh on a Swing")
 st.markdown('DESCRIPTION')
 st.header("")
 
 col1, col2 = st.columns([1, 1])
 
 with col1:
+    st.write('Try drawing a few lines...')
     # Create a canvas component
     canvas_hardcoded = st_canvas(
         fill_color="rgba(255, 165, 0, 1)",
@@ -63,6 +64,7 @@ with col1:
     )
 
 with col2:
+    st.write('...and see what happens')
     # Do something interesting with the image data and paths
     if canvas_hardcoded.image_data is not None:
 
