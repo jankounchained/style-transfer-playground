@@ -27,11 +27,13 @@ else:
 st.title("Style transfer fun zone")
 st.header("")
 
-with st.expander("ℹ️ - About this app", expanded=True):
+with st.expander("ℹ️ - Tutorial", expanded=False):
 
     st.write(
         """
-        APP DESCRIPTION
+        You need two images for Style Transfer:  
+        A **content image** for objects and a **style image** for colors, textures and so on.   
+        The result is an image, that has things from the content image, but looks like the style image.
 	    """
     )
     st.markdown("")
@@ -94,10 +96,15 @@ with col2_c:
         final_img = tensor_to_image(stylized_image)
         st.image(final_img, use_column_width=True)
 
-# download
-# st.header('')
-# col1_d, col2_d, col3_d = st.columns([1, 0.5, 1])
 
-# with col2_d:
-#     if predict:
-#         st.download_button('Download image', data=final_img)
+
+
+# # sidebar for image forslag
+# from PIL import Image
+
+# example = Image.open('examples/0.png')
+
+# ahoj = st.button(st.image(example))
+
+# if ahoj:
+#     st.write('it works!')

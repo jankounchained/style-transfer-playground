@@ -18,31 +18,47 @@ bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
 # FIXME: disabling bg image upload, as this doesn't carry ove to style transfer
 # bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
 
-realtime_update = st.sidebar.checkbox("Update in realtime", True)
-
-    
-
 # Create a canvas component
-canvas_result = st_canvas(
-    fill_color="rgba(255, 165, 0, 1)",
-    stroke_width=stroke_width,
-    stroke_color=stroke_color,
-    background_color=bg_color,
-    # FIXME: see above, bg image upload
-    # background_image=Image.open(bg_image) if bg_image else None,
-    background_image=None,
-    update_streamlit=realtime_update,
-    width=512,
-    height=512,
-    drawing_mode=drawing_mode,
-    point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
-    key="canvas",
-)
+def init_canvas():
+    canvas_result = st_canvas(
+        initial_drawing=initial_drawing,
+        fill_color="rgba(255, 165, 0, 1)",
+        stroke_width=stroke_width,
+        stroke_color=stroke_color,
+        background_color=bg_color,
+        background_image=None,
+        update_streamlit=True,
+        width=512,
+        height=512,
+        drawing_mode=drawing_mode,
+        point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
+        key="canvas"
+    )
+    return canvas_result
 
-# # Do something interesting with the image data and paths
-# if canvas_result.image_data is not None:
-#     st.image(canvas_result.image_data)
+# reset canvas, if desired
+reset_canvas = st.sidebar.button("Reset canvas")
+if reset_canvas:
+    # remove local initial drawing
+    initial_drawing = None
+    # remove image data from session state
+    if 'initial_drawing' in st.session_state:
+        del st.session_state['initial_drawing']
+    if 'canvas_img' in st.session_state:
+        del st.session_state['canvas_img']
+    if 'canvas_tensor' in st.session_state:
+        del st.session_state['canvas_tensor']
+    # rerun canvas
+    st.experimental_rerun()
 
+# reuse initial drawing, if available
+if 'initial_drawing' in st.session_state:
+    initial_drawing = st.session_state['initial_drawing']
+else:
+    initial_drawing = None
+
+# init canvas 
+canvas_result = init_canvas()
 
 # send to style transfer
 send_to_nst = st.button('Use for Style Transfer')
@@ -53,5 +69,5 @@ if send_to_nst:
     # save in session state
     st.session_state['canvas_img'] = canvas_result.image_data
     st.session_state['canvas_tensor'] = transformed_canvas
-
-    st.write('FIXME: Please navigate to the Style transfer page')
+    st.session_state['initial_drawing'] = canvas_result.json_data
+    st.write('Please navigate to the Style transfer page')
