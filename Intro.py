@@ -47,7 +47,7 @@ st.header("")
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.write('Try drawing a few lines...')
+    st.write('Try drawing...')
     # Create a canvas component
     canvas_hardcoded = st_canvas(
         fill_color="rgba(255, 165, 0, 1)",
@@ -63,10 +63,12 @@ with col1:
         key="canvas",
     )
 
+    unique_elements = np.unique(canvas_hardcoded.image_data)
+
 with col2:
     st.write('...and see what happens')
     # Do something interesting with the image data and paths
-    if canvas_hardcoded.image_data is not None:
+    if canvas_hardcoded.image_data is not None and len(unique_elements) > 2:
 
         random_picker = np.random.randint(0, len(style_image_collection))
         picked_style_img = style_image_collection[random_picker]
