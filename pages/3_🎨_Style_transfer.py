@@ -1,4 +1,5 @@
 import os
+from PIL import Image
 
 import streamlit as st
 import matplotlib.pyplot as plt
@@ -12,7 +13,7 @@ from src.nst_config import get_model, get_style_ref_imgs, quick_style_transfer
 
 # streamlit config
 st.set_page_config(
-    page_title="Style transfer",
+    page_title="Style Transfer Playground",
     page_icon="🎨",
 )
 
@@ -24,7 +25,7 @@ else:
     model = st.session_state['nst_model']
 
 
-st.title("Style transfer fun zone")
+st.markdown('Here you can try Style tansfer with your own images, or with the drawing from **📃 Canvas**')
 st.header("")
 
 with st.expander("ℹ️ - Tutorial", expanded=False):
@@ -36,6 +37,9 @@ with st.expander("ℹ️ - Tutorial", expanded=False):
         The result is an image, that has things from the content image, but looks like the style image.
 	    """
     )
+    tutorial_img = Image.open('img/style_transfer_demo-min.png')
+    st.image(tutorial_img)
+
     st.markdown("")
 
 # set up dividers
