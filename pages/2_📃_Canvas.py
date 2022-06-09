@@ -7,7 +7,7 @@ from src.util import convert_canvas
 
 # streamlit config
 st.set_page_config(
-    page_title="Style transfer",
+    page_title="Style Transfer Playground",
     page_icon="📃",
 )
 
@@ -76,4 +76,4 @@ if send_to_nst:
     st.session_state['canvas_img'] = canvas_result.image_data
     st.session_state['canvas_tensor'] = transformed_canvas
     st.session_state['initial_drawing'] = canvas_result.json_data
-    st.write('Please navigate to the Style transfer page')
+    st.write('Ok, your drawing is now loaded. Go to **🎨 Style transfer**')

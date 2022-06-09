@@ -85,5 +85,5 @@ with col2:
 
 st.markdown('')
 if canvas_hardcoded.image_data is not None and len(unique_elements) > 2:
-    st.markdown("You can draw some more on 📃 Canvas.")
-    st.markdown("Or, if you want to try style transfer on your own images, go straight to 🎨 Style transfer.")
+    st.markdown("You can draw some more on [**📃 Canvas**](/Canvas).", unsafe_allow_html=True)
+    st.markdown("Or, if you want to try style transfer on your own images, go straight to [**🎨 Style transfer**](/Style_transfer).", unsafe_allow_html=True)
