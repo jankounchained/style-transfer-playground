@@ -13,7 +13,7 @@ from src.nst_config import get_model, get_style_ref_imgs, quick_style_transfer
 # streamlit config
 st.set_page_config(
     page_title="Style transfer",
-    page_icon="👺",
+    page_icon="🎨",
 )
 
 # model config

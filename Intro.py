@@ -20,8 +20,8 @@ from src.nst_config import get_model, get_style_ref_imgs, quick_style_transfer
 
 # streamlit config
 st.set_page_config(
-    page_title="Van Gogh on a swing",
-    page_icon="👺",
+    page_title="Van Gogh on a Swing",
+    page_icon="ℹ️",
 )
 
 
@@ -61,6 +61,7 @@ with col1:
         drawing_mode="freedraw",
         # point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
         key="canvas",
+        display_toolbar=False
     )
 
     unique_elements = np.unique(canvas_hardcoded.image_data)

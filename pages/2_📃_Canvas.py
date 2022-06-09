@@ -5,6 +5,12 @@ from streamlit_drawable_canvas import st_canvas
 
 from src.util import convert_canvas
 
+# streamlit config
+st.set_page_config(
+    page_title="Style transfer",
+    page_icon="📃",
+)
+
 # Specify canvas parameters in application
 drawing_mode = st.sidebar.selectbox(
     "Drawing tool:", ("freedraw", "point", "line", "rect", "circle", "transform")
