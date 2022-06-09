@@ -47,14 +47,12 @@ st.markdown("")
 col1_a, col2_a = st.columns(2)
 
 with col1_a:
-    st.write('Content')
-    content_image_file = st.file_uploader(
-        "Upload main image", type=("png", "jpg"))
+    st.markdown('#### Content image')
+    content_image_file = st.file_uploader(label='Upload content image', type=("png", "jpg"))
 
 with col2_a:
-    st.write('Style')
-    style_image_file = st.file_uploader(
-        "Upload style image", type=("png", "jpg"))
+    st.markdown('#### Style image')
+    style_image_file = st.file_uploader(label='Upload style image', type=("png", "jpg"))
 
 
 # show loaded images

@@ -11,6 +11,8 @@ st.set_page_config(
     page_icon="📃",
 )
 
+st.markdown("Here you can draw. When you're done, you can use your drawing in **🎨 Style transfer**")
+
 # Specify canvas parameters in application
 drawing_mode = st.sidebar.selectbox(
     "Drawing tool:", ("freedraw", "point", "line", "rect", "circle", "transform")
