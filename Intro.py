@@ -20,7 +20,7 @@ from src.nst_config import get_model, get_style_ref_imgs, quick_style_transfer
 
 # streamlit config
 st.set_page_config(
-    page_title="Van Gogh on a Swing",
+    page_title="Style Transfer Playground",
     page_icon="ℹ️",
 )
 
@@ -40,8 +40,8 @@ style_image_collection = get_style_ref_imgs()
 ### app layout
 ###
 
-st.title("Van Gogh on a Swing")
-st.markdown('DESCRIPTION')
+st.title("Style Transfer Playground")
+st.markdown('')
 st.header("")
 
 col1, col2 = st.columns([1, 1])
@@ -84,3 +84,6 @@ with col2:
         st.image(display_img)
 
 st.markdown('')
+if canvas_hardcoded.image_data is not None and len(unique_elements) > 2:
+    st.markdown("You can draw some more on 📃 Canvas.")
+    st.markdown("Or, if you want to try style transfer on your own images, go straight to 🎨 Style transfer.")
