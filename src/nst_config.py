@@ -22,7 +22,7 @@ def get_model():
 
 def get_style_ref_imgs(reference_dir="reference-img/"):
 
-    paths = [os.path.join(reference_dir, path) for path in os.listdir(reference_dir)]
+    paths = [os.path.join(reference_dir, path) for path in os.listdir(reference_dir) if path.endswith('.jpg')]
 
     style_image_collection = []
     for path in paths:
