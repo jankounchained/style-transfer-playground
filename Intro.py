@@ -23,18 +23,15 @@ st.set_page_config(
     page_icon="ℹ️",
 )
 
-run_count = 0
-run_count += 1
 
-if run_count == 1:
-    # model config
-    if 'nst_model' not in st.session_state:
-        model = get_model()
-        st.session_state['nst_model'] = model
-    else:
-        model = st.session_state['nst_model']
+# model config
+if 'nst_model' not in st.session_state:
+    model = get_model()
+    st.session_state['nst_model'] = model
+else:
+    model = st.session_state['nst_model']
 
-    style_image_collection = get_style_ref_imgs()
+style_image_collection = get_style_ref_imgs()
 
 
 
@@ -60,11 +57,12 @@ with col1:
         width=300,
         height=256,
         drawing_mode="freedraw",
-        key="canvas",
+        key="canvas_hardcoded",
         display_toolbar=False
     )
 
     unique_elements = np.unique(canvas_hardcoded.image_data)
+    st.write(f'unique elements: {len(unique_elements)}')
 
 with col2:
     st.write('...and see what happens')
