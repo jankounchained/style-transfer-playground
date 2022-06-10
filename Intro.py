@@ -56,12 +56,10 @@ with col1:
         stroke_width=5,
         stroke_color="#000000",
         background_color="#EEEEEE",
-        # background_image=Image.open(bg_image) if bg_image else None,
-        update_streamlit=False,
+        update_streamlit=True,
         width=300,
         height=256,
         drawing_mode="freedraw",
-        # point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
         key="canvas",
         display_toolbar=False
     )
