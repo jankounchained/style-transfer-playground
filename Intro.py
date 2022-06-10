@@ -57,7 +57,7 @@ with col1:
         stroke_color="#000000",
         background_color="#EEEEEE",
         # background_image=Image.open(bg_image) if bg_image else None,
-        update_streamlit=True,
+        update_streamlit=False,
         width=300,
         height=256,
         drawing_mode="freedraw",
