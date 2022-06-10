@@ -23,15 +23,18 @@ st.set_page_config(
     page_icon="ℹ️",
 )
 
+run_count = 0
+run_count += 1
 
-# model config
-if 'nst_model' not in st.session_state:
-    model = get_model()
-    st.session_state['nst_model'] = model
-else:
-    model = st.session_state['nst_model']
+if run_count == 1:
+    # model config
+    if 'nst_model' not in st.session_state:
+        model = get_model()
+        st.session_state['nst_model'] = model
+    else:
+        model = st.session_state['nst_model']
 
-style_image_collection = get_style_ref_imgs()
+    style_image_collection = get_style_ref_imgs()
 
 
 
