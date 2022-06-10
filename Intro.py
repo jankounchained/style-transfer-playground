@@ -61,13 +61,23 @@ with col1:
         display_toolbar=False
     )
 
-    unique_elements = np.unique(canvas_hardcoded.image_data)
-    st.write(f'unique elements: {len(unique_elements)}')
+# track canvas state outside of the column
+@st.cache
+def get_rendering_tag(_canvas):
+    unique_elements = np.unique(_canvas.image_data)
+    if len(unique_elements) > 2:
+        render_display_tile = True
+    else:
+        render_display_tile = False
+    return render_display_tile
+
+render_display_tile = get_rendering_tag(canvas_hardcoded)
 
 with col2:
     st.write('...and see what happens')
     # Do something interesting with the image data and paths
-    if canvas_hardcoded.image_data is not None and len(unique_elements) > 2:
+    if render_display_tile:
+    # if canvas_hardcoded.image_data is not None and len(unique_elements) > 2:
 
         random_picker = np.random.randint(0, len(style_image_collection))
         picked_style_img = style_image_collection[random_picker]
@@ -82,6 +92,13 @@ with col2:
         st.image(display_img)
 
 st.markdown('')
-if canvas_hardcoded.image_data is not None and len(unique_elements) > 2:
-    st.markdown("You can draw some more on [**📃 Canvas**](/Canvas).", unsafe_allow_html=True)
-    st.markdown("Or, if you want to try style transfer on your own images, go straight to [**🎨 Style transfer**](/Style_transfer).", unsafe_allow_html=True)
+if render_display_tile:
+# if canvas_hardcoded.image_data is not None and len(unique_elements) > 2:
+    st.markdown(
+        "You can draw some more on [**📃 Canvas**](/Canvas).",
+        unsafe_allow_html=True
+        )
+    st.markdown(
+        "Or, if you want to try style transfer on your own images, go straight to [**🎨 Style transfer**](/Style_transfer).",
+        unsafe_allow_html=True
+        )
