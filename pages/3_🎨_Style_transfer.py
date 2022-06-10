@@ -8,7 +8,7 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
 
-from src.util import crop_center, load_img_url, load_img_path, show_n, transform_img, tensor_to_image
+from src.util import crop_center, load_img_url, load_img_path, transform_img, tensor_to_image
 from src.nst_config import get_model, get_style_ref_imgs, quick_style_transfer
 
 # streamlit config
