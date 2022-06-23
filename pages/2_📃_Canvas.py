@@ -21,7 +21,7 @@ stroke_width = st.sidebar.slider("Stroke width: ", 1, 25, 3)
 if drawing_mode == 'point':
     point_display_radius = st.sidebar.slider("Point display radius: ", 1, 25, 3)
 stroke_color = st.sidebar.color_picker("Stroke color hex: ")
-bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
+fill_color = st.sidebar.color_picker("Fill color hex: ")
 # FIXME: disabling bg image upload, as this doesn't carry ove to style transfer
 # bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
 
@@ -29,10 +29,10 @@ bg_color = st.sidebar.color_picker("Background color hex: ", "#eee")
 def init_canvas():
     canvas_result = st_canvas(
         initial_drawing=initial_drawing,
-        fill_color="rgba(255, 165, 0, 1)",
+        fill_color=fill_color,
         stroke_width=stroke_width,
         stroke_color=stroke_color,
-        background_color=bg_color,
+        background_color='#eee',
         background_image=None,
         update_streamlit=True,
         width=512,
